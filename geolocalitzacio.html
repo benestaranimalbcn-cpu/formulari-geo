@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8"/>
+<title>Geolocalització…</title>
+<script>
+  // Enllaç preomplert amb valors de prova 11.111111 / 22.222222
+  const prefilled = "https://forms.office.com/Pages/ResponsePage.aspx?id=wxyJ58naIUGy2v2Mz00IVQDZRDVMjJxNlvzjxSRni_RUOU84TlA5Mk5UTFk2RTZHSFFRNTdQV0E5Si4u&r7612907370b54d8a82cf4e64b9821349=11.111111&raa4475aa111a442f812aed34d17e47e6=22.222222";
+
+  function go(url){
+     window.location.replace(url);
+  }
+
+  function fallback(){
+     const url = prefilled
+        .replace("11.111111","")
+        .replace("22.222222","");
+     go(url);
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const lat = pos.coords.latitude.toFixed(6);
+      const lon = pos.coords.longitude.toFixed(6);
+      const final = prefilled
+        .replace("11.111111", lat)
+        .replace("22.222222", lon);
+      go(final);
+    },
+    err => fallback(),
+    { enableHighAccuracy: true, timeout: 7000, maximumAge: 0 }
+  );
+</script>
+</head>
+<body>
+Detectant ubicació… Permet la sol·licitud si el navegador ho demana.
+</body>
+</html>
